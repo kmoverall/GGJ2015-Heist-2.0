@@ -43,6 +43,18 @@ public class GameStateController : MonoBehaviour
 			currentClick += 1;            
 			lastClickTime = Time.time;	  
 		}
+
+        if (currentGameState == GameState.Setup) {
+            if (Input.GetKeyUp (KeyCode.A)) {
+                currentClick--;
+            }
+            if (Input.GetKeyUp (KeyCode.D)) {
+                currentClick++;
+            }
+            if (Input.GetKeyUp (KeyCode.Space)) {
+                currentClick = 0;
+            }
+        }
 	}
 	
 	void OnGUI() 

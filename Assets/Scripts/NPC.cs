@@ -16,11 +16,12 @@ public class NPC : MonoBehaviour {
 	public int moneyHeld;
 	public bool combinationHeld;
     public Transform footprints;
+    private List<GameObject> footprintList;
 	
 	// Use this for initialization
 	void Start () {
 		//Retrieve game state
-		gameState = GameObject.FindGameObjectWithTag ("GameState").GetComponent<GameStateController>();
+		gameState = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameStateController>();
 
 		//Generate path dictionary
 		foreach (PathNode p in path) {
@@ -40,12 +41,12 @@ public class NPC : MonoBehaviour {
             if (gameState.CurrentClick < 0) {
                 for (float j = footstepFreq; j < 1; j += footstepFreq) {
                     Vector3 lerp = pathDict [gameState.CurrentClick].position * (1-j) + pathDict [gameState.CurrentClick + 1].position * j;
-                    Instantiate(footprints, lerp, Quaternion.identity);
+                    footprintList.Add (Instantiate(footprints, lerp, Quaternion.identity));
                 }
             } else if (gameState.CurrentClick > 0) {
                 for (float j = footstepFreq; j < 1; j += footstepFreq) {
                     Vector3 lerp = pathDict [gameState.CurrentClick].position * (1-j) + pathDict [gameState.CurrentClick - 1].position * j;
-                    Instantiate(footprints, lerp, Quaternion.identity);
+                    footprintList.Add (Instantiate(footprints, lerp, Quaternion.identity));
                 }
            }
 		}
