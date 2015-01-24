@@ -17,6 +17,8 @@ public class Player : MonoBehaviour {
     public bool isSelected;
     public bool IsSelected { get { return isSelected; } set{ isSelected = value; } }
     public KeyCode selectNum;
+
+    public float stealRange;
 	
 	// Use this for initialization
 	void Start () {
@@ -52,9 +54,19 @@ public class Player : MonoBehaviour {
         }
 
         if (gameState.CurrentGameState == GameStateController.GameState.Execution) {
-            if(orderQueue[gameState.CurrentClick].command == Order.Commands.MOVE) {
+            if(orderQueue[gameState.CurrentClick].command != Order.Commands.WAIT) {
                 agent.SetDestination(orderQueue[gameState.CurrentClick].location);
+                if (orderQueue[gameState.CurrentClick].command == Order.Commands.STEAL && agent.remainingDistance < stealRange) {
+                    Steal ();
+                }
             }
         }
 	}
+
+    void Steal () {
+        Stealable[] targets = FindObjectsOfType (typeof(Stealable)) as Stealable[];
+        foreach (Stealable s in targets) {
+            moneyHeld += s.Steal (this);
+        }
+    }
 }

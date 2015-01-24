@@ -8,7 +8,7 @@ public struct PathNode {
 	public Transform position;
 }
 
-public class NPC : MonoBehaviour {
+public class NPC : MonoBehaviour, Stealable {
     private const float footstepFreq = 0.2f; //How often are footstep sprites put in the npc's path. 0 < footstepFreq < 1. Pref. divides 1 evenly
 	public List<PathNode> path; //Done to make pathDict editable in the inspector. Converted to a dictionary at runtime
 	private Dictionary<int, Transform> pathDict = new Dictionary<int, Transform>();
@@ -70,4 +70,13 @@ public class NPC : MonoBehaviour {
             agent.SetDestination(pathDict[gameState.CurrentClick+1].position);
         }
 	}
+
+    public int Steal(Player culprit) {
+        if (Vector3.Distance (this.gameObject.transform.position, culprit.gameObject.transform.position) < culprit.stealRange) {
+            int tmpmon = moneyHeld;
+            moneyHeld = 0;
+            return tmpmon;
+        } else
+            return 0;
+    }
 }
