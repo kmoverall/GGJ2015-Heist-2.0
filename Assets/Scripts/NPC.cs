@@ -17,12 +17,14 @@ public class NPC : MonoBehaviour {
 	public bool combinationHeld;
     public Transform footprints;
     private List<GameObject> footprintList;
+    private NavMeshAgent agent;
 
     private bool footprintsSpawned = false;
 	
 	// Use this for initialization
 	void Start () {
-        footprintList = new List<GameObject> ();
+        agent = GetComponent<NavMeshAgent>();
+
 		//Retrieve game state
 		gameState = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameStateController>();
 
@@ -64,9 +66,8 @@ public class NPC : MonoBehaviour {
 
 		}
 
-		
         if (gameState.CurrentGameState == GameStateController.GameState.Execution) {
-
+            agent.SetDestination(pathDict[gameState.CurrentClick+1].position);
         }
 	}
 }
