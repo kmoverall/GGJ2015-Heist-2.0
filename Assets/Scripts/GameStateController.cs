@@ -66,6 +66,7 @@ public class GameStateController : MonoBehaviour
 	
 	void OnGUI() 
 	{
+		
 
 		if (currentClick == 0 && currentGameState == GameState.Setup) 
 		{
