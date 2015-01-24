@@ -25,41 +25,53 @@ public class GameStateController : MonoBehaviour
 	private int numOfTeamMembers = 0;
 	public int NumOfTeamMembers {get { return numOfTeamMembers; } set { numOfTeamMembers = value; } }
 
+    public bool clickBeginThisFrame = false;
 	
 	// Use this for initialization
 	void Start () 
 	{
-		
-		lastClickTime = Time.time;
 		
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
+        if (clickBeginThisFrame) {
+            clickBeginThisFrame = false;
+        }
+
 		// Keep track of what curent "Click" is once execution has begun.
 		if (currentGameState == GameState.Execution && (Time.time - lastClickTime) > secondsPerClick) 
 		{
 			currentClick += 1;            
-			lastClickTime = Time.time;	  
+            lastClickTime = Time.time;
+            clickBeginThisFrame = true;
+            Debug.Log (currentClick);
 		}
+
+        if (currentGameState == GameState.Setup) {
+            if (Input.GetKeyUp (KeyCode.A)) {
+                currentClick--;
+            }
+            if (Input.GetKeyUp (KeyCode.D)) {
+                currentClick++;
+            }
+            if (Input.GetKeyUp (KeyCode.Space)) {
+                currentClick = 0;
+            }
+        }
 	}
 	
 	void OnGUI() 
 	{
-		GUILayout.Label ("Curent Click: " + currentClick + "  Time:" + lastClickTime.ToString("0"));
 
-		if (currentClick == 0) 
+		if (currentClick == 0 && currentGameState == GameState.Setup) 
 		{
-			if (GUI.Button (new Rect (10, 10, 70, 70), "Execute")) 
+			if (GUI.Button (new Rect (10, 10, 70, 70), "Execute")) {
 				currentGameState = GameState.Execution;
-
-			//if (GUI.Button (new Rect (10, 100, 70, 70), "Move"))
-			//	Debug.Log("clicked move buton");
-			
-			//if (GUI.Button (new Rect (100, 100, 70, 70), "Acion"))
-				//Debug.Log("Clicked Action Button");
-
+                lastClickTime = Time.time;
+                clickBeginThisFrame = true;
+            }
 		}
 
 	}

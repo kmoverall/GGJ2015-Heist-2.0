@@ -16,11 +16,17 @@ public class NPC : MonoBehaviour {
 	public int moneyHeld;
 	public bool combinationHeld;
     public Transform footprints;
+    private List<GameObject> footprintList;
+    private NavMeshAgent agent;
+
+    private bool footprintsSpawned = false;
 	
 	// Use this for initialization
 	void Start () {
+        agent = GetComponent<NavMeshAgent>();
+
 		//Retrieve game state
-		gameState = GameObject.FindGameObjectWithTag ("GameState").GetComponent<GameStateController>();
+		gameState = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameStateController>();
 
 		//Generate path dictionary
 		foreach (PathNode p in path) {
@@ -36,23 +42,32 @@ public class NPC : MonoBehaviour {
 				this.gameObject.transform.position = pathDict [gameState.CurrentClick].position;
 			}
 
-            //Linearly interpolate between current position and next/prev position to place footprints
-            if (gameState.CurrentClick < 0) {
-                for (float j = footstepFreq; j < 1; j += footstepFreq) {
-                    Vector3 lerp = pathDict [gameState.CurrentClick].position * (1-j) + pathDict [gameState.CurrentClick + 1].position * j;
-                    Instantiate(footprints, lerp, Quaternion.identity);
-                }
-            } else if (gameState.CurrentClick > 0) {
-                for (float j = footstepFreq; j < 1; j += footstepFreq) {
-                    Vector3 lerp = pathDict [gameState.CurrentClick].position * (1-j) + pathDict [gameState.CurrentClick - 1].position * j;
-                    Instantiate(footprints, lerp, Quaternion.identity);
-                }
+            if (Input.GetKeyUp (KeyCode.A) || Input.GetKeyUp (KeyCode.D) || Input.GetKeyUp (KeyCode.Space)) {
+                footprintsSpawned = false;
+            }
+
+            if (!footprintsSpawned) {
+                if (gameState.CurrentClick < 0) {
+                    for (float j = footstepFreq; j < 1; j += footstepFreq) {
+                        Vector3 lerp = pathDict [gameState.CurrentClick].position * (1-j) + pathDict [gameState.CurrentClick + 1].position * j;
+                        lerp.y += 0.1f;
+                        Instantiate(footprints, lerp, Quaternion.Euler (-90f,0f,0f));
+                    }
+                    footprintsSpawned = true;
+                } else if (gameState.CurrentClick > 0) {
+                    for (float j = footstepFreq; j < 1; j += footstepFreq) {
+                        Vector3 lerp = pathDict [gameState.CurrentClick].position * (1-j) + pathDict [gameState.CurrentClick - 1].position * j;
+                        lerp.y += 0.1f;
+                        Instantiate(footprints, lerp, Quaternion.Euler (-90f,0f,0f));
+                    }
+                    footprintsSpawned = true;
+               }
            }
+
 		}
 
-		
         if (gameState.CurrentGameState == GameStateController.GameState.Execution) {
-
+            agent.SetDestination(pathDict[gameState.CurrentClick+1].position);
         }
 	}
 }
