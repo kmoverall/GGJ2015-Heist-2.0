@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections;
-
-
+using System.Collections.Generic;
 
 public class GameStateController : MonoBehaviour 
 {
@@ -27,11 +26,17 @@ public class GameStateController : MonoBehaviour
 	public int NumOfTeamMembers {get { return numOfTeamMembers; } set { numOfTeamMembers = value; } }
 
     public bool clickBeginThisFrame = false;
+
+    private List<Player> robbers;
 	
 	// Use this for initialization
 	void Start () 
 	{
-		
+        robbers = new List<Player> ();
+        GameObject[] tmprob = GameObject.FindGameObjectsWithTag ("Player");
+        foreach (GameObject go in tmprob) {
+            robbers.Add (go.GetComponent<Player>());
+        }
 	}
 	
 	// Update is called once per frame
