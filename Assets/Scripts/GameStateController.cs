@@ -22,10 +22,12 @@ public class GameStateController : MonoBehaviour
 	private float totalMoney = 0.0f;
 	public float TotalMoney { get { return totalMoney; } set { totalMoney = value; } }
 
-	private int numOfTeamMembers = 0;
+	private int numOfTeamMembers = 4;
 	public int NumOfTeamMembers {get { return numOfTeamMembers; } set { numOfTeamMembers = value; } }
 
     public bool clickBeginThisFrame = false;
+
+    public int maxTimeDisplacement = 5;
 
     private List<Player> robbers;
 	
@@ -54,7 +56,6 @@ public class GameStateController : MonoBehaviour
             clickBeginThisFrame = true;
             Debug.Log (currentClick);
 		}
-
         if (currentGameState == GameState.Setup) {
             if (Input.GetKeyUp (KeyCode.A)) {
                 currentClick--;

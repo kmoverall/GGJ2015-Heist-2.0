@@ -21,6 +21,8 @@ public class Player : MonoBehaviour {
 
     private Vector3 targetLocation;
 
+    public bool escaped;
+
 	// Use this for initialization
 	void Start () {
 		agent = GetComponent<NavMeshAgent>();
@@ -34,42 +36,43 @@ public class Player : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        if (gameState.CurrentGameState == GameStateController.GameState.Setup && gameState.CurrentClick == 0) {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-            //Draw target if in range of movement and on floor plane
-            if (Physics.Raycast (ray, out hit) && Input.GetMouseButtonUp (1)) {
-                if (Vector3.Distance (this.gameObject.transform.position, hit.point) < agent.speed * GameStateController.secondsPerClick) {
-                    targetLocation = new Vector3(hit.point.x, hit.point.y + 0.5f, hit.point.z);
-                    Transform tmpObj = (Transform)Instantiate(target, targetLocation, Quaternion.Euler (-90,0,0));
-                    targetQueue.Add (tmpObj);
-                    orderQueue.Add (new Order(Order.Commands.MOVE, targetLocation));
+        if (!escaped) {
+            if (gameState.CurrentGameState == GameStateController.GameState.Setup && gameState.CurrentClick == 0) {
+                RaycastHit hit;
+                Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+                //Draw target if in range of movement and on floor plane
+                if (Physics.Raycast (ray, out hit) && Input.GetMouseButtonUp (1)) {
+                    if (Vector3.Distance (this.gameObject.transform.position, hit.point) < agent.speed * GameStateController.secondsPerClick) {
+                        targetLocation = new Vector3 (hit.point.x, hit.point.y + 0.5f, hit.point.z);
+                        Transform tmpObj = (Transform)Instantiate (target, targetLocation, Quaternion.Euler (-90, 0, 0));
+                        targetQueue.Add (tmpObj);
+                        orderQueue.Add (new Order (Order.Commands.MOVE, targetLocation));
+                    }
+                }
+
+                if (Input.GetKeyUp (KeyCode.Backspace) && targetQueue.Count > 0 && orderQueue.Count > 0) {
+                    Destroy (targetQueue [targetQueue.Count - 1].gameObject);
+                    targetQueue.RemoveAt (targetQueue.Count - 1);
+                    orderQueue.RemoveAt (orderQueue.Count - 1);
                 }
             }
 
-            if (Input.GetKeyUp (KeyCode.Backspace) && targetQueue.Count > 0 && orderQueue.Count > 0) {
-                Destroy (targetQueue[targetQueue.Count - 1].gameObject);
-                targetQueue.RemoveAt (targetQueue.Count - 1);
-                orderQueue.RemoveAt (orderQueue.Count -1);
+            //Turn off target point rendering if robber is not selected
+            foreach (Transform t in targetQueue) {
+                t.gameObject.renderer.enabled = isSelected;
             }
-        }
 
-        //Turn off target point rendering if robber is not selected
-        foreach(Transform t in targetQueue) {
-            t.gameObject.renderer.enabled = isSelected;
-        }
-
-        if (gameState.CurrentGameState == GameStateController.GameState.Execution) {
-            if(orderQueue[gameState.CurrentClick].command != Order.Commands.WAIT) {
-                agent.SetDestination(orderQueue[gameState.CurrentClick].location);
-                if (agent.remainingDistance < stealRange) {
-                    Steal ();
+            if (gameState.CurrentGameState == GameStateController.GameState.Execution) {
+                if (orderQueue.Count > gameState.CurrentClick && orderQueue [gameState.CurrentClick].command != Order.Commands.WAIT) {
+                    agent.SetDestination (orderQueue [gameState.CurrentClick].location);
+                    if (agent.remainingDistance < stealRange) {
+                        Steal ();
+                    }
+                } else {
+                    agent.SetDestination (this.transform.position);
                 }
-            } else {
-                agent.SetDestination (this.transform.position);
             }
         }
-
 
 	}
 
