@@ -81,9 +81,8 @@ public class GameStateController : MonoBehaviour
 		{
 			case (int)ButtonClicked.GoBack:
 				
-				
 				if ( currentGameState == GameState.Setup)
-					currentClick += 1;
+					currentClick -= 1;
 				
 				break;
 			case (int)ButtonClicked.GoFoward:
@@ -94,8 +93,30 @@ public class GameStateController : MonoBehaviour
 				break;
 			case (int)ButtonClicked.Execute:
 				
-				if (currentClick == 0 && currentGameState == GameState.Setup) 
+				GameObject obj = GameObject.Find("Execute");
+				obj.SetActive(false);
+			
+				obj = GameObject.Find("goForward");
+				obj.SetActive(false);
+
+				obj = GameObject.Find("goBack");
+				obj.SetActive(false);
+
+				obj = GameObject.Find("teamMember1");
+				obj.SetActive(false);
+
+				obj = GameObject.Find("teamMember2");
+				obj.SetActive(false);
+
+				obj = GameObject.Find("teamMember3");
+				obj.SetActive(false);
+
+				obj = GameObject.Find("teamMember4");
+				obj.SetActive(false);
+
+				if (currentGameState == GameState.Setup) 
 				{
+					currentClick = 0; 
 					currentGameState = GameState.Execution;
 					lastClickTime = Time.time;
 					clickBeginThisFrame = true;
