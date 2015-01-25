@@ -14,7 +14,7 @@ GameObject:
   - 114: {fileID: 11425838}
   - 195: {fileID: 19525838}
   m_Layer: 0
-  m_Name: Teammate
+  m_Name: Robber
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
