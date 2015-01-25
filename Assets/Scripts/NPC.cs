@@ -9,20 +9,20 @@ public struct PathNode {
 }
 
 public class NPC : MonoBehaviour, Stealable {
-    private const float footstepFreq = 0.2f; //How often are footstep sprites put in the npc's path. 0 < footstepFreq < 1. Pref. divides 1 evenly
+    protected const float footstepFreq = 0.2f; //How often are footstep sprites put in the npc's path. 0 < footstepFreq < 1. Pref. divides 1 evenly
 	public List<PathNode> path; //Done to make pathDict editable in the inspector. Converted to a dictionary at runtime
-	private Dictionary<int, Transform> pathDict = new Dictionary<int, Transform>();
-	private GameStateController gameState;
+	protected Dictionary<int, Transform> pathDict = new Dictionary<int, Transform>();
+    protected GameStateController gameState;
 	public int moneyHeld;
 	public bool combinationHeld;
     public Transform footprints;
-    private List<GameObject> footprintList;
-    private NavMeshAgent agent;
+    protected List<GameObject> footprintList;
+    protected NavMeshAgent agent;
 
-    private bool footprintsSpawned = false;
+    protected bool footprintsSpawned = false;
 	
 	// Use this for initialization
-	void Start () {
+	protected void Start () {
         agent = GetComponent<NavMeshAgent>();
 
 		//Retrieve game state
@@ -35,7 +35,7 @@ public class NPC : MonoBehaviour, Stealable {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	protected void Update () {
 		if (gameState.CurrentGameState == GameStateController.GameState.Setup) {
             //Move NPC to appropriate location for currentClick
 			if (this.gameObject.transform.position != pathDict [gameState.CurrentClick].position) {

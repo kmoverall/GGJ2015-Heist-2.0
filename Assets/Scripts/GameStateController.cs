@@ -26,8 +26,6 @@ public class GameStateController : MonoBehaviour
 	private int numOfTeamMembers = 0;
 	public int NumOfTeamMembers {get { return numOfTeamMembers; } set { numOfTeamMembers = value; } }
 
-    public KeyCode selectedTeamMember = KeyCode.Alpha1;
-
     public bool clickBeginThisFrame = false;
 	
 	// Use this for initialization
@@ -61,6 +59,11 @@ public class GameStateController : MonoBehaviour
             }
             if (Input.GetKeyUp (KeyCode.Space)) {
                 currentClick = 0;
+            }
+            if (Input.GetKeyUp (KeyCode.Return)) {
+                currentGameState = GameState.Execution;
+                lastClickTime = Time.time;
+                clickBeginThisFrame = true;
             }
         }
 	}
