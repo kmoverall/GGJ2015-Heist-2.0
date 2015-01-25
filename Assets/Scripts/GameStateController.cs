@@ -7,6 +7,7 @@ public class GameStateController : MonoBehaviour
 {
 	
 	public enum GameState { Setup, Execution };
+	public enum ButtonClicked { GoBack, GoFoward, Execute, TeamMember1, TeamMember2, TeamMember3, TeamMember4 };
 	
 	// Constant for the number of seconds that elapse before a "Click" happens.
 	public const float secondsPerClick = 5.0f;
@@ -61,19 +62,45 @@ public class GameStateController : MonoBehaviour
             }
         }
 	}
-	
-	void OnGUI() 
-	{
-		
 
-		if (currentClick == 0 && currentGameState == GameState.Setup) 
+	public void ButtonClick (int button )
+	{	
+
+
+		switch (button) 
 		{
-			if (GUI.Button (new Rect (10, 10, 70, 70), "Execute")) {
-				currentGameState = GameState.Execution;
-                lastClickTime = Time.time;
-                clickBeginThisFrame = true;
-            }
+			case (int)ButtonClicked.GoBack:
+				
+				break;
+			case (int)ButtonClicked.GoFoward:
+				
+				break;
+			case (int)ButtonClicked.Execute:
+				
+				break;
+			case (int)ButtonClicked.TeamMember1:
+				
+				break;
+			case (int)ButtonClicked.TeamMember2:
+				
+				break;
+			case (int)ButtonClicked.TeamMember3:
+				
+				break;
+			case (int)ButtonClicked.TeamMember4:
+				
+				break;
 		}
 
+
+			if (currentClick == 0 && currentGameState == GameState.Setup) 
+			{
+				currentGameState = GameState.Execution;
+				lastClickTime = Time.time;
+				clickBeginThisFrame = true;
+			}
 	}
+	
+
+
 }
