@@ -118,22 +118,22 @@ public class GameStateController : MonoBehaviour
 				break;
 
 			case (int)ButtonClicked.TeamMember1:
-				robbers[0].isSelected = true;
+				robbers[2].isSelected = true;
 				robbers[1].isSelected = false;
-				robbers[1].isSelected = false;
+				robbers[0].isSelected = false;
 
 			break;
 
 			case (int)ButtonClicked.TeamMember2:
-				robbers[0].isSelected = false;
+				robbers[2].isSelected = false;
 				robbers[1].isSelected = true;
-				robbers[1].isSelected = false;
+				robbers[0].isSelected = false;
 			
 				break;
 			case (int)ButtonClicked.TeamMember3:
-				robbers[0].isSelected = false;
+				robbers[2].isSelected = false;
 				robbers[1].isSelected = false;
-				robbers[1].isSelected = true;
+				robbers[0].isSelected = true;
 			
 				break;
 

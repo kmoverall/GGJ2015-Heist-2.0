@@ -2227,7 +2227,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: TeamMember1
+  m_Text: Robber 1
 --- !u!222 &681499428
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2293,7 +2293,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: TeamMembe3
+  m_Text: Robber 3
 --- !u!222 &709089173
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5402,7 +5402,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: TeamMember2
+  m_Text: Robber 2
 --- !u!222 &1871773623
 CanvasRenderer:
   m_ObjectHideFlags: 0
