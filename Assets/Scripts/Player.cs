@@ -37,7 +37,7 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if (!escaped) {
-            if (gameState.CurrentGameState == GameStateController.GameState.Setup && gameState.CurrentClick == 0) {
+            if (gameState.CurrentGameState == GameStateController.GameState.Setup && gameState.CurrentClick == 0 && isSelected) {
                 RaycastHit hit;
                 Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
                 //Draw target if in range of movement and on floor plane

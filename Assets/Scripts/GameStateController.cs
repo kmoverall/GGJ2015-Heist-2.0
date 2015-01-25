@@ -9,7 +9,7 @@ public class GameStateController : MonoBehaviour
 	public enum ButtonClicked { GoBack, GoFoward, Execute, TeamMember1, TeamMember2, TeamMember3, TeamMember4 };
 	
 	// Constant for the number of seconds that elapse before a "Click" happens.
-	public const float secondsPerClick = 5.0f;
+	public const float secondsPerClick = 3.0f;
 	private float lastClickTime;
 	
 	// Current "Click", Denotes number of discrete time periods before or after start of game.
