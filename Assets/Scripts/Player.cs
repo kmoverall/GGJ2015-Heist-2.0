@@ -43,7 +43,7 @@ public class Player : MonoBehaviour {
                 //Draw target if in range of movement and on floor plane
                 if (Physics.Raycast (ray, out hit) && Input.GetMouseButtonUp (1)) {
                     Vector3 lastpoint = targetQueue.Count > 0 ? targetQueue[targetQueue.Count-1].position : this.gameObject.transform.position; 
-                    if (Vector3.Distance (this.gameObject.transform.position, hit.point) < agent.speed * GameStateController.secondsPerClick
+                    if (Vector3.Distance (lastpoint, hit.point) < agent.speed * GameStateController.secondsPerClick
                             && targetQueue.Count < gameState.maxTimeDisplacement) {
                         targetLocation = new Vector3 (hit.point.x, hit.point.y + 0.5f, hit.point.z);
                         Transform tmpObj = (Transform)Instantiate (target, targetLocation, Quaternion.Euler (-90, 0, 0));
