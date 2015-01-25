@@ -15,7 +15,7 @@ GameObject:
   - 195: {fileID: 19525838}
   m_Layer: 0
   m_Name: Teammate
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -73,7 +73,6 @@ MonoBehaviour:
   moneyHeld: 0
   target: {fileID: 441170, guid: 8fb824987f3b97545bc057c6c8fb40b0, type: 2}
   isSelected: 1
-  selectNum: 49
   stealRange: 0
 --- !u!136 &13625838
 CapsuleCollider:
