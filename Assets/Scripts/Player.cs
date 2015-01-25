@@ -28,7 +28,7 @@ public class Player : MonoBehaviour {
         targetQueue = new List<Transform> ();
         orderQueue = new List<Order> ();
 
-        //Retrieve game state
+        //Retrieve game statef
         gameState = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameStateController>();
 	}
 
@@ -73,7 +73,7 @@ public class Player : MonoBehaviour {
 
 	}
 
-    void Steal () {
+    public void Steal () {
         NPC[] targets = FindObjectsOfType (typeof(NPC)) as NPC[];
         foreach (Stealable s in targets) {
             moneyHeld += s.Steal (this);
