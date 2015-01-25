@@ -68,16 +68,29 @@ public class GameStateController : MonoBehaviour
 	public void ButtonClick (int button )
 	{	
 
-
 		switch (button) 
 		{
 			case (int)ButtonClicked.GoBack:
 				
+				
+				if ( currentGameState == GameState.Setup)
+					currentClick += 1;
+				
 				break;
 			case (int)ButtonClicked.GoFoward:
 				
+				if ( currentGameState == GameState.Setup)
+					currentClick += 1;
+
 				break;
 			case (int)ButtonClicked.Execute:
+				
+				if (currentClick == 0 && currentGameState == GameState.Setup) 
+				{
+					currentGameState = GameState.Execution;
+					lastClickTime = Time.time;
+					clickBeginThisFrame = true;
+				}
 				
 				break;
 			case (int)ButtonClicked.TeamMember1:
@@ -95,12 +108,7 @@ public class GameStateController : MonoBehaviour
 		}
 
 
-			if (currentClick == 0 && currentGameState == GameState.Setup) 
-			{
-				currentGameState = GameState.Execution;
-				lastClickTime = Time.time;
-				clickBeginThisFrame = true;
-			}
+			
 	}
 	
 
