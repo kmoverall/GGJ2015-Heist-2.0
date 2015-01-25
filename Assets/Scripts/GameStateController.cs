@@ -74,9 +74,10 @@ public class GameStateController : MonoBehaviour
         }
 	}
 
+	// When an UI button is pushed, act accordingly.
 	public void ButtonClick (int button )
 	{	
-
+		// Depending on what button was pushed.
 		switch (button) 
 		{
 			case (int)ButtonClicked.GoBack:
@@ -93,6 +94,7 @@ public class GameStateController : MonoBehaviour
 				break;
 			case (int)ButtonClicked.Execute:
 				
+				// hide some buttons
 				GameObject obj = GameObject.Find("Execute");
 				obj.SetActive(false);
 			
@@ -100,18 +102,6 @@ public class GameStateController : MonoBehaviour
 				obj.SetActive(false);
 
 				obj = GameObject.Find("goBack");
-				obj.SetActive(false);
-
-				obj = GameObject.Find("teamMember1");
-				obj.SetActive(false);
-
-				obj = GameObject.Find("teamMember2");
-				obj.SetActive(false);
-
-				obj = GameObject.Find("teamMember3");
-				obj.SetActive(false);
-
-				obj = GameObject.Find("teamMember4");
 				obj.SetActive(false);
 
 				if (currentGameState == GameState.Setup) 
