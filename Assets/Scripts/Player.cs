@@ -8,7 +8,7 @@ public class Player : MonoBehaviour {
 
     private List<Order> orderQueue;
 
-    private int moneyHeld;
+    public int moneyHeld;
     private bool isCaught;
 
     public Transform target;
@@ -42,7 +42,7 @@ public class Player : MonoBehaviour {
                     Vector3 targetPos = new Vector3(hit.point.x, hit.point.y + 0.5f, hit.point.z);
                     Transform tmpObj = (Transform)Instantiate(target, targetPos, Quaternion.Euler (-90,0,0));
                     targetQueue.Add (tmpObj);
-                    orderQueue.Add (new Order(Order.Commands.MOVE, hit.point));
+                    orderQueue.Add (new Order(Order.Commands.STEAL, hit.point));
                 }
             }
 
@@ -63,9 +63,17 @@ public class Player : MonoBehaviour {
         }
 	}
 
+    void OnGui () {
+
+    }
+
     void Steal () {
-        Stealable[] targets = FindObjectsOfType (typeof(Stealable)) as Stealable[];
+        NPC[] targets = FindObjectsOfType (typeof(NPC)) as NPC[];
         foreach (Stealable s in targets) {
+            moneyHeld += s.Steal (this);
+        }
+        Treasure[] gold = FindObjectsOfType (typeof(Treasure)) as Treasure[];
+        foreach (Stealable s in gold) {
             moneyHeld += s.Steal (this);
         }
     }
