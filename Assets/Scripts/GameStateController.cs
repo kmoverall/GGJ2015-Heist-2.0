@@ -60,6 +60,11 @@ public class GameStateController : MonoBehaviour
             if (Input.GetKeyUp (KeyCode.Space)) {
                 currentClick = 0;
             }
+            if (Input.GetKeyUp (KeyCode.Return)) {
+                currentGameState = GameState.Execution;
+                lastClickTime = Time.time;
+                clickBeginThisFrame = true;
+            }
         }
 	}
 

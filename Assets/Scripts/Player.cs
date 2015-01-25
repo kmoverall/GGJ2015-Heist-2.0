@@ -19,12 +19,6 @@ public class Player : MonoBehaviour {
 
     public float stealRange;
 
-    public RectTransform walkButton;
-    public RectTransform waitButton;
-
-    private RectTransform walkButtonInstance;
-    private RectTransform waitButtonInstance;
-
     private Vector3 targetLocation;
 
 	// Use this for initialization
