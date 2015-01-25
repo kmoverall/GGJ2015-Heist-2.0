@@ -48,6 +48,8 @@ public class GameStateController : MonoBehaviour
             clickBeginThisFrame = false;
         }
 
+
+
 		// Keep track of what curent "Click" is once execution has begun.
 		if (currentGameState == GameState.Execution && (Time.time - lastClickTime) > secondsPerClick) 
 		{
@@ -104,6 +106,7 @@ public class GameStateController : MonoBehaviour
 				obj = GameObject.Find("goBack");
 				obj.SetActive(false);
 
+				// Stars game execution phase.
 				if (currentGameState == GameState.Setup) 
 				{
 					currentClick = 0; 
@@ -113,18 +116,27 @@ public class GameStateController : MonoBehaviour
 				}
 				
 				break;
+
 			case (int)ButtonClicked.TeamMember1:
-				
-				break;
+				robbers[0].isSelected = true;
+				robbers[1].isSelected = false;
+				robbers[1].isSelected = false;
+
+			break;
+
 			case (int)ButtonClicked.TeamMember2:
-				
+				robbers[0].isSelected = false;
+				robbers[1].isSelected = true;
+				robbers[1].isSelected = false;
+			
 				break;
 			case (int)ButtonClicked.TeamMember3:
-				
+				robbers[0].isSelected = false;
+				robbers[1].isSelected = false;
+				robbers[1].isSelected = true;
+			
 				break;
-			case (int)ButtonClicked.TeamMember4:
-				
-				break;
+
 		}
 
 
