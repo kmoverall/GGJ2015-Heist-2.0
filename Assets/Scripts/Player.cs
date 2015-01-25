@@ -16,10 +16,17 @@ public class Player : MonoBehaviour {
 
     public bool isSelected;
     public bool IsSelected { get { return isSelected; } set{ isSelected = value; } }
-    public KeyCode selectNum;
 
     public float stealRange;
-	
+
+    public RectTransform walkButton;
+    public RectTransform waitButton;
+
+    private RectTransform walkButtonInstance;
+    private RectTransform waitButtonInstance;
+
+    private Vector3 targetLocation;
+
 	// Use this for initialization
 	void Start () {
 		agent = GetComponent<NavMeshAgent>();
@@ -39,10 +46,10 @@ public class Player : MonoBehaviour {
             //Draw target if in range of movement and on floor plane
             if (Physics.Raycast (ray, out hit) && Input.GetMouseButtonUp (1)) {
                 if (Vector3.Distance (this.gameObject.transform.position, hit.point) < agent.speed * GameStateController.secondsPerClick) {
-                    Vector3 targetPos = new Vector3(hit.point.x, hit.point.y + 0.5f, hit.point.z);
-                    Transform tmpObj = (Transform)Instantiate(target, targetPos, Quaternion.Euler (-90,0,0));
+                    targetLocation = new Vector3(hit.point.x, hit.point.y + 0.5f, hit.point.z);
+                    Transform tmpObj = (Transform)Instantiate(target, targetLocation, Quaternion.Euler (-90,0,0));
                     targetQueue.Add (tmpObj);
-                    orderQueue.Add (new Order(Order.Commands.STEAL, hit.point));
+                    orderQueue.Add (new Order(Order.Commands.MOVE, targetLocation));
                 }
             }
 
@@ -53,19 +60,24 @@ public class Player : MonoBehaviour {
             }
         }
 
+        //Turn off target point rendering if robber is not selected
+        foreach(Transform t in targetQueue) {
+            t.gameObject.renderer.enabled = isSelected;
+        }
+
         if (gameState.CurrentGameState == GameStateController.GameState.Execution) {
             if(orderQueue[gameState.CurrentClick].command != Order.Commands.WAIT) {
                 agent.SetDestination(orderQueue[gameState.CurrentClick].location);
-                if (orderQueue[gameState.CurrentClick].command == Order.Commands.STEAL && agent.remainingDistance < stealRange) {
+                if (agent.remainingDistance < stealRange) {
                     Steal ();
                 }
+            } else {
+                agent.SetDestination (this.transform.position);
             }
         }
+
+
 	}
-
-    void OnGui () {
-
-    }
 
     void Steal () {
         NPC[] targets = FindObjectsOfType (typeof(NPC)) as NPC[];

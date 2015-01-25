@@ -25,8 +25,6 @@ public class GameStateController : MonoBehaviour
 	private int numOfTeamMembers = 0;
 	public int NumOfTeamMembers {get { return numOfTeamMembers; } set { numOfTeamMembers = value; } }
 
-    public KeyCode selectedTeamMember = KeyCode.Alpha1;
-
     public bool clickBeginThisFrame = false;
 	
 	// Use this for initialization
